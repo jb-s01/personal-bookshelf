@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { XIcon } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
@@ -80,10 +80,17 @@ function BookSummaryPanel({ book }: { book: Book }) {
 }
 
 export function BookDialog({ book, onOpenChange }: BookDialogProps) {
+  const canDismiss = useRef(false);
+
   useEffect(() => {
     if (!book) {
+      canDismiss.current = false;
       return;
     }
+    canDismiss.current = false;
+    const arm = window.setTimeout(() => {
+      canDismiss.current = true;
+    }, 350);
     const onKey = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         onOpenChange(false);
@@ -93,6 +100,7 @@ export function BookDialog({ book, onOpenChange }: BookDialogProps) {
     const previous = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     return () => {
+      window.clearTimeout(arm);
       window.removeEventListener("keydown", onKey);
       document.body.style.overflow = previous;
     };
@@ -113,7 +121,11 @@ export function BookDialog({ book, onOpenChange }: BookDialogProps) {
         type="button"
         className="absolute inset-0 cursor-default"
         aria-label="Close brief"
-        onClick={() => onOpenChange(false)}
+        onClick={() => {
+          if (canDismiss.current) {
+            onOpenChange(false);
+          }
+        }}
       />
       <div className="relative z-10 w-full max-w-lg rounded-xl bg-[color:var(--paper)] p-5 shadow-xl ring-1 ring-[color:var(--wood-edge)]/20">
         <Button

@@ -18,7 +18,11 @@ export function BookSpine({ book, onSelect }: BookSpineProps) {
     <button
       type="button"
       data-spine
-      onClick={() => onSelect(book)}
+      onClick={(event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        onSelect(book);
+      }}
       onMouseEnter={(event) => {
         animate(event.currentTarget, {
           translateY: -14,

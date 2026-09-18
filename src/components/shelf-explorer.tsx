@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { AnimatedShelf } from "@/components/animated-shelf";
 import { BookDialog } from "@/components/book-dialog";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -28,6 +28,11 @@ export function ShelfExplorer() {
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<Filter>("all");
   const [selected, setSelected] = useState<Book | null>(null);
+  const handleOpenChange = useCallback((open: boolean) => {
+    if (!open) {
+      setSelected(null);
+    }
+  }, []);
 
   const visible = useMemo(() => filterBooks(filter, query), [filter, query]);
 
@@ -69,6 +74,10 @@ export function ShelfExplorer() {
           </TabsList>
         </Tabs>
       </div>
+      <p className="text-sm text-muted-foreground">
+        Showing {visible.length} of {searchBooks("").length}
+        {query.trim() ? ` for “${query.trim()}”` : ""}
+      </p>
       <div className="flex flex-wrap gap-2">
         {SHELF_IDS.map((shelf) => (
           <button
@@ -109,7 +118,7 @@ export function ShelfExplorer() {
           );
         })
       )}
-      <BookDialog book={selected} onOpenChange={(open) => !open && setSelected(null)} />
+      <BookDialog book={selected} onOpenChange={handleOpenChange} />
     </div>
   );
 }
