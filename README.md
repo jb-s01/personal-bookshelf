@@ -39,7 +39,7 @@ Copy `.env.example` to `.env.local` if you want to pin a model.
 - `/bio` — career, method, and what the collection implies
 - `/book/[id]` — a single title, with an Ollama brief when available
 
-The catalog is `src/data/catalog.json` (45 titles). Tall shelves are the standing collection; the stool, O’Reilly stack, and small display row are marked currently reading.
+The catalog is `src/data/catalog.json` (titles read from the six shelf photos). Tall shelves are the standing collection; the stool, O’Reilly stack, and small display row are marked currently reading. Main-right’s bottom row and main-left’s top row are the same physical shelf — catalogued once.
 
 ## Stack
 

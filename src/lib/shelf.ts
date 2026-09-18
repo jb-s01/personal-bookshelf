@@ -24,17 +24,17 @@ export function shelfLabel(shelf: ShelfId): string {
 export function shelfBlurb(shelf: ShelfId): string {
   switch (shelf) {
     case "display":
-      return "The small facing row on the desk: stoic practice beside Graham.";
+      return "The facing row on the desk: stoic dailies, Hamming, Munger, and Graham.";
     case "stool":
-      return "The working pile on the stool — judgment, money, and habits.";
+      return "The working pile on the stool — quantum, data history, and Kasparov.";
     case "oreilly":
-      return "Animal-covered craft books, currently off the tall shelves.";
+      return "Chip Huyen and Yves Hilpisch, currently off the tall shelves.";
     case "leadership":
-      return "How teams actually run. Collection, not the current desk stack.";
+      return "Investing, Gladwell, Willink, and the business bay. Standing collection.";
     case "main-left":
-      return "Markets, risk, and the footnotes from the Citco years.";
+      return "Thrillers, war, Tolkien, and the Hadfield stack at the bottom.";
     case "main-right":
-      return "AI, causality, and the software craft that showed up at night.";
+      return "Craft and textbooks on top, classics in the middle, Harari and science below.";
     default: {
       const _exhaustive: never = shelf;
       return _exhaustive;

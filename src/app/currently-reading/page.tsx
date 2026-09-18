@@ -23,9 +23,9 @@ export default function CurrentlyReadingPage() {
           <LlmStatusBadge />
         </div>
         <p className="max-w-2xl text-muted-foreground">
-          Off the tall wall and onto the furniture: the stool stack, the O’Reilly
-          pile, and the small display of Daily Stoic, Meditations, and The
-          Intelligent Investor.
+          Off the tall wall and onto the furniture: the stool stack (quantum,
+          data history, Kasparov), the O’Reilly pile (Huyen and Hilpisch), and
+          the desk display of stoic dailies, Hamming, Munger, and Graham.
         </p>
       </header>
       {reading.length === 0 ? (
