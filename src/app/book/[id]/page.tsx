@@ -1,13 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { LlmStatusBadge } from "@/components/llm-status";
 import { getBook } from "@/lib/catalog";
 import { summarizeBook } from "@/lib/ollama";
 import { shelfLabel } from "@/lib/shelf";
-
-export const dynamicParams = true;
 
 type PageProps = {
   params: Promise<{ id: string }>;
@@ -26,7 +23,17 @@ export default async function BookPage({ params }: PageProps) {
   const { id } = await params;
   const book = getBook(id);
   if (!book) {
-    notFound();
+    return (
+      <div className="mx-auto max-w-lg px-4 py-20 text-center">
+        <h1 className="font-heading text-3xl text-[color:var(--walnut)]">That spine isn’t here.</h1>
+        <p className="mt-3 text-muted-foreground">
+          The catalog doesn’t include that id. It may have been misshelved.
+        </p>
+        <Link href="/shelves" className="mt-6 inline-block underline-offset-4 hover:underline">
+          Return to the shelves
+        </Link>
+      </div>
+    );
   }
 
   const brief = await summarizeBook(book);
