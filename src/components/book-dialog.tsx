@@ -2,14 +2,9 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { XIcon } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 import { LlmStatusBadge } from "@/components/llm-status";
 import { shelfLabel } from "@/lib/shelf";
 import type { Book, SummaryResponse } from "@/lib/types";
@@ -85,40 +80,80 @@ function BookSummaryPanel({ book }: { book: Book }) {
 }
 
 export function BookDialog({ book, onOpenChange }: BookDialogProps) {
+  useEffect(() => {
+    if (!book) {
+      return;
+    }
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        onOpenChange(false);
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = previous;
+    };
+  }, [book, onOpenChange]);
+
+  if (!book) {
+    return null;
+  }
+
   return (
-    <Dialog open={book !== null} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-lg bg-[color:var(--paper)] sm:max-w-lg">
-        {book ? (
-          <>
-            <DialogHeader>
-              <DialogTitle className="font-heading text-2xl leading-tight">
-                {book.title}
-              </DialogTitle>
-              <DialogDescription>
-                {book.author} · {book.year} · {book.genre}
-              </DialogDescription>
-            </DialogHeader>
-            <div className="flex flex-wrap items-center gap-2">
-              <Badge variant="outline">{shelfLabel(book.shelf)}</Badge>
-              {book.currentlyReading ? (
-                <Badge className="bg-[color:var(--brass)] text-[color:var(--walnut)]">
-                  Currently reading
-                </Badge>
-              ) : (
-                <Badge variant="secondary">Collection</Badge>
-              )}
-              <LlmStatusBadge />
-            </div>
-            <BookSummaryPanel key={book.id} book={book} />
-            <Link
-              href={`/book/${book.id}`}
-              className="inline-flex h-8 items-center justify-center rounded-lg bg-primary px-2.5 text-sm font-medium text-primary-foreground"
-            >
-              Open full card
-            </Link>
-          </>
-        ) : null}
-      </DialogContent>
-    </Dialog>
+    <div
+      className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/40 p-4 pt-[10vh] sm:pt-[12vh]"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="book-dialog-title"
+    >
+      <button
+        type="button"
+        className="absolute inset-0 cursor-default"
+        aria-label="Close brief"
+        onClick={() => onOpenChange(false)}
+      />
+      <div className="relative z-10 w-full max-w-lg rounded-xl bg-[color:var(--paper)] p-5 shadow-xl ring-1 ring-[color:var(--wood-edge)]/20">
+        <Button
+          variant="ghost"
+          size="icon-sm"
+          className="absolute top-3 right-3"
+          aria-label="Close"
+          onClick={() => onOpenChange(false)}
+        >
+          <XIcon />
+        </Button>
+        <div className="space-y-1 pr-8">
+          <h2 id="book-dialog-title" className="font-heading text-2xl leading-tight">
+            {book.title}
+          </h2>
+          <p className="text-sm text-muted-foreground">
+            {book.author} · {book.year} · {book.genre}
+          </p>
+        </div>
+        <div className="mt-3 flex flex-wrap items-center gap-2">
+          <Badge variant="outline">{shelfLabel(book.shelf)}</Badge>
+          {book.currentlyReading ? (
+            <Badge className="bg-[color:var(--brass)] text-[color:var(--walnut)]">
+              Currently reading
+            </Badge>
+          ) : (
+            <Badge variant="secondary">Collection</Badge>
+          )}
+          <LlmStatusBadge />
+        </div>
+        <div className="mt-4 space-y-4">
+          <BookSummaryPanel key={book.id} book={book} />
+          <Link
+            href={`/book/${book.id}`}
+            className="inline-flex h-8 items-center justify-center rounded-lg bg-primary px-2.5 text-sm font-medium text-primary-foreground"
+          >
+            Open full card
+          </Link>
+        </div>
+      </div>
+    </div>
   );
 }

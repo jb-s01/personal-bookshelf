@@ -3,14 +3,8 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { Menu } from "lucide-react";
+import { Menu, XIcon } from "lucide-react";
 import { Button, buttonVariants } from "@/components/ui/button";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 
 const links = [
@@ -57,31 +51,29 @@ export function SiteHeader() {
           variant="outline"
           size="icon"
           className="md:hidden"
-          aria-label="Open menu"
-          onClick={() => setOpen(true)}
+          aria-label={open ? "Close menu" : "Open menu"}
+          aria-expanded={open}
+          onClick={() => setOpen((value) => !value)}
         >
-          <Menu />
+          {open ? <XIcon /> : <Menu />}
         </Button>
-        <Sheet open={open} onOpenChange={setOpen}>
-          <SheetContent side="right" className="bg-[color:var(--paper)]">
-            <SheetHeader>
-              <SheetTitle className="font-heading">Navigate</SheetTitle>
-            </SheetHeader>
-            <div className="flex flex-col gap-1 px-4">
-              {links.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setOpen(false)}
-                  className="rounded-lg px-3 py-2 text-base hover:bg-[color:var(--walnut)]/10"
-                >
-                  {link.label}
-                </Link>
-              ))}
-            </div>
-          </SheetContent>
-        </Sheet>
       </div>
+      {open ? (
+        <nav className="border-t border-[color:var(--wood-edge)] bg-[color:var(--paper)] px-4 py-3 md:hidden">
+          <div className="mx-auto flex max-w-6xl flex-col gap-1">
+            {links.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={() => setOpen(false)}
+                className="rounded-lg px-3 py-2 text-base hover:bg-[color:var(--walnut)]/10"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </div>
+        </nav>
+      ) : null}
     </header>
   );
 }

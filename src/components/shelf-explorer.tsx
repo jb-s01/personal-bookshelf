@@ -1,10 +1,9 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Input } from "@/components/ui/input";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AnimatedShelf } from "@/components/animated-shelf";
 import { BookDialog } from "@/components/book-dialog";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { searchBooks } from "@/lib/catalog";
 import { SHELF_IDS, type Book, type ShelfId } from "@/lib/types";
 import { isDeskShelf, shelfBlurb, shelfLabel } from "@/lib/shelf";
@@ -48,12 +47,12 @@ export function ShelfExplorer() {
   return (
     <div className="space-y-8">
       <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-        <Input
+        <input
           value={query}
           onChange={(event) => setQuery(event.target.value)}
           placeholder="Search title, author, or genre"
           aria-label="Search the shelves"
-          className="max-w-md bg-[color:var(--paper)]"
+          className="h-8 w-full max-w-md rounded-lg border border-input bg-[color:var(--paper)] px-2.5 text-sm outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
         />
         <Tabs
           value={filter === "all" || filter === "desk" || filter === "collection" ? filter : "all"}

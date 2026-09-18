@@ -3,17 +3,15 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { LlmStatusBadge } from "@/components/llm-status";
-import { getBook, getBooks } from "@/lib/catalog";
+import { getBook } from "@/lib/catalog";
 import { summarizeBook } from "@/lib/ollama";
 import { shelfLabel } from "@/lib/shelf";
+
+export const dynamicParams = true;
 
 type PageProps = {
   params: Promise<{ id: string }>;
 };
-
-export async function generateStaticParams() {
-  return getBooks().map((book) => ({ id: book.id }));
-}
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { id } = await params;
