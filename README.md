@@ -1,8 +1,8 @@
 # Jonas’s bookshelf
 
-A personal library site for **Jonas Slaunwhite** — Technology Manager, Data & AI at BDO Canada, based in Halifax. Visitors can walk the physical shelves, open a spine for a short brief, see what is currently on the desk, and read a bio drawn from his public work (`jb-s01` profile/portfolio, Concordia teaching, and the career graph that lives in `resume_graph`).
+A personal library site for **Jonas Slaunwhite** — Technology Manager, Data & AI at BDO Canada, based in Halifax. Open a cinematic door, walk a hallway of adjacent dimensions, and arrive at a single animated bookcase. Pull a spine and it opens to a short brief.
 
-The interactive wall uses [Anime.js](https://animejs.com) for the shelf stagger and the pull-out hover. Briefs try a local [Ollama](https://ollama.com) model first and fall back to the static shelf notes if Ollama is not running.
+The wall uses [Anime.js](https://animejs.com) for shelf stagger, lamp glow, vibrating strings, and vault rails, and [Motion](https://motion.dev) for the door, camera walk, dust, and the pull-out / open-book choreography. Briefs try a local [Ollama](https://ollama.com) model first and fall back to the static shelf notes if Ollama is not running.
 
 ## Run locally
 
@@ -33,14 +33,10 @@ Copy `.env.example` to `.env.local` if you want to pin a model.
 
 ## What’s in here
 
-- `/` — desk pile and the working quote
-- `/shelves` — the six photographed bays as an animated wall
-- `/currently-reading` — stool, O’Reilly, and the stoic/investor display
-- `/bio` — career, method, and what the collection implies
-- `/book/[id]` — a single title, with an Ollama brief when available
+- `/` — door, quantum hallway, then the bookcase in a futurist vault. Click a spine to pull it and open a brief.
 
-The catalog is `src/data/catalog.json` (titles read from the six shelf photos). Tall shelves are the standing collection; the stool, O’Reilly stack, and small display row are marked currently reading. Main-right’s bottom row and main-left’s top row are the same physical shelf — catalogued once.
+The catalog is `src/data/catalog.json` (titles read from the six shelf photos). Every title sits on the same wall — no labeled bays.
 
 ## Stack
 
-Next.js (App Router) · TypeScript · Tailwind · shadcn/ui · Anime.js · Ollama
+Next.js (App Router) · TypeScript · Tailwind · shadcn/ui · Anime.js · Motion · Ollama

@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import { Figtree, Fraunces } from "next/font/google";
-import { SiteFooter, SiteHeader } from "@/components/site-header";
+import { Figtree, IBM_Plex_Mono, Newsreader, Outfit } from "next/font/google";
 import "./globals.css";
 
 const sans = Figtree({
@@ -8,30 +7,41 @@ const sans = Figtree({
   subsets: ["latin"],
 });
 
-const heading = Fraunces({
-  variable: "--font-fraunces",
+const display = Outfit({
+  variable: "--font-outfit",
   subsets: ["latin"],
+  weight: ["300", "400", "500"],
+});
+
+const heading = Newsreader({
+  variable: "--font-newsreader",
+  subsets: ["latin"],
+  style: ["normal", "italic"],
+});
+
+const mono = IBM_Plex_Mono({
+  variable: "--font-plex-mono",
+  subsets: ["latin"],
+  weight: ["400", "500"],
 });
 
 export const metadata: Metadata = {
   title: {
-    default: "Jonas’s bookshelf",
-    template: "%s · Jonas’s bookshelf",
+    default: "My personal library in digital timespace",
+    template: "%s · My personal library in digital timespace",
   },
   description:
-    "Jonas Slaunwhite’s physical library in Halifax — browse the shelves, see what he’s reading, and read a short brief on each spine.",
+    "A cinematic door into Jonas Slaunwhite’s physical library — adjacent rooms, then the wall of spines.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${sans.variable} ${heading.variable} h-full antialiased`}
+      className={`${sans.variable} ${display.variable} ${heading.variable} ${mono.variable} h-full antialiased`}
     >
-      <body className="flex min-h-full flex-col bg-background text-foreground">
-        <SiteHeader />
-        <main className="flex-1">{children}</main>
-        <SiteFooter />
+      <body className="relative h-dvh overflow-hidden bg-[#03050c] text-foreground">
+        <main className="h-dvh">{children}</main>
       </body>
     </html>
   );
