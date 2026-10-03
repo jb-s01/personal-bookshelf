@@ -1,4 +1,4 @@
-# Jonas’s bookshelf
+# Jonas' bookshelf
 
 A personal library site for **Jonas Slaunwhite** — Technology Manager, Data & AI at BDO Canada, based in Halifax. Open a cinematic door, walk a hallway of adjacent dimensions, and arrive at a single animated bookcase. Pull a spine and it opens to a short brief.
 
